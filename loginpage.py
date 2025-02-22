@@ -58,7 +58,7 @@ def showpassword():
         passwordentry.config(show="*")
 
 #to check username and passsword
-def signin():
+def signin(event):
     username = usernameentry.get()
     password = passwordentry.get()
     cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
@@ -119,6 +119,9 @@ closewindowbutton.place(relx=1,rely=0,anchor='ne')
 #to exit full screen
 def exit_fullscreen(event):
     login.attributes("-fullscreen",False)
+
+#adding return bind so that enter thichda chalos
+login.bind('<Return>',signin)
 
 login.bind('<Escape>',exit_fullscreen)
 login.mainloop()
