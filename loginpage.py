@@ -6,8 +6,8 @@ from PIL import Image, ImageTk
 
 #for signin and signup initializing database
 logindata = sqlite3.connect('users.db')
-login=logindata.cursor()
-login.execute(
+logindb=logindata.cursor()
+logindb.execute(
     '''CREATE TABLE IF NOT EXISTS users(
     username text PRIMARYKEY,
     password text NOT NULL
@@ -61,8 +61,8 @@ def showpassword():
 def signin():
     username = usernameentry.get()
     password = passwordentry.get()
-    login.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    if login.fetchone():
+    logindb.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    if logindb.fetchone():
         login.destroy()
         runpy.run_path('dashboard.py')
       
@@ -77,11 +77,11 @@ def signup():
     username = usernameentry.get()
     password = passwordentry.get()
     if username and password:
-        login.execute("SELECT * FROM users WHERE username=?", (username,))
-        if login.fetchone():
+        logindb.execute("SELECT * FROM users WHERE username=?", (username,))
+        if logindb.fetchone():
             messagebox.showerror('Error', 'Username already exists')
         else:
-            login.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+            logindb.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
             logindata.commit()
             usernameentry.delete(0,END)
             passwordentry.delete(0,END)
@@ -121,8 +121,9 @@ def exit_fullscreen(event):
     login.attributes("-fullscreen",False)
 
 #adding return bind so that enter thichda chalos
-login.bind('<Return>',lambda event: signin())
+
 
 login.bind('<Escape>',exit_fullscreen)
+login.bind('<Return>', lambda event: signin())
 login.mainloop()
 logindata.close()
