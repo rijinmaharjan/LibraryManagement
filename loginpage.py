@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import sqlite3
 import runpy
+from PIL import Image, ImageTk
 
 #for signin and signup initializing database
 logindata = sqlite3.connect('users.db')
@@ -16,8 +17,37 @@ cursor.execute(
 logindata.commit()
 
 login=Tk()
+
 login.title('Library Management System Login')
 login.attributes("-fullscreen",True)
+login.minsize(400,400)
+
+#for backgtound image
+backgroundimage=Image.open('loginpage.jpg')
+backgroundimage=backgroundimage.resize((login.winfo_screenwidth(), login.winfo_screenheight()))    #to resize with exact dimensions of my screen
+backgroumdimage_insert = ImageTk.PhotoImage(backgroundimage) 
+backgroundimage_label = Label(login, image=backgroumdimage_insert)
+backgroundimage_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+#title for the page
+banner_frame = Frame(login, bg="#003366", height=50)
+banner_frame.pack() 
+banner_label = Label(banner_frame, text="Library Management System Login Portal", fg="white", bg="#003366", font=("Arial", 16, "bold"))
+banner_label.pack()
+
+#for login frame 
+screen_width = login.winfo_screenwidth()
+screen_height = login.winfo_screenheight()
+
+
+frame_width = 300 
+frame_height = 200
+x_center = (screen_width-frame_width) // 2
+y_center = (screen_height-frame_height) // 2
+
+frame = Frame(login, width=frame_width, height=frame_height,bg="#57a1f8")
+frame.place(relx=0.5, rely=0.5, anchor='center', width=frame_width, height=frame_height)
+
 
 #to show and hide password
 def showpassword():
@@ -60,25 +90,28 @@ def signup():
         messagebox.showerror('Error', 'Please enter both username and password')
 
 
-username = Label(login, text='Username:').place(x=40, y=50)
-password = Label(login, text='Password:').place(x=40, y=100)
+username = Label(frame, text='Username:',bg="#57a1f8").place(x=40, y=50)
+password = Label(frame, text='Password:',bg="#57a1f8").place(x=40, y=75)
 
-usernameentry = Entry(login)
+usernameentry = Entry(frame)
 usernameentry.place(x=120, y=50)
 
 
-passwordentry = Entry(login, show='*')
-passwordentry.place(x=120, y=100)
+passwordentry = Entry(frame, show='*')
+passwordentry.place(x=120, y=75)
 
 checkbutton = IntVar()
-showpasswordbutton = Checkbutton(login, text='Show', variable=checkbutton, command=showpassword)
-showpasswordbutton.place(x=75, y=200)
+showpasswordbutton = Checkbutton(frame, text='Show Password', bg="#57a1f8", variable=checkbutton, command=showpassword)
+showpasswordbutton.place(x=75, y=100)
 
-b = Button(login, text='Login', command=signin)
-b.place(x=85, y=300)
+loginbutton = Button(frame, text='Login', fg='white', bg="#003366", command=signin)
+loginbutton.place(x=85, y=120)
 
-s = Button(login, text='Signup', command=signup)
-s.place(x=85, y=350)
+signupbutton = Button(frame, text='Signup', fg='white', bg="#003366", command=signup)
+signupbutton.place(x=85, y=150)
+
+#toclose the login window
+closewindowbutton= Button(login,)
 
 def exit_fullscreen(event):
     login.attributes("-fullscreen",False)
