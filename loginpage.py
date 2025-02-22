@@ -6,8 +6,8 @@ from PIL import Image, ImageTk
 
 #for signin and signup initializing database
 logindata = sqlite3.connect('users.db')
-cursor=logindata.cursor()
-cursor.execute(
+login=logindata.cursor()
+login.execute(
     '''CREATE TABLE IF NOT EXISTS users(
     username text PRIMARYKEY,
     password text NOT NULL
@@ -61,8 +61,8 @@ def showpassword():
 def signin():
     username = usernameentry.get()
     password = passwordentry.get()
-    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    if cursor.fetchone():
+    login.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    if login.fetchone():
         login.destroy()
         runpy.run_path('dashboard.py')
       
@@ -77,11 +77,11 @@ def signup():
     username = usernameentry.get()
     password = passwordentry.get()
     if username and password:
-        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
-        if cursor.fetchone():
+        login.execute("SELECT * FROM users WHERE username=?", (username,))
+        if login.fetchone():
             messagebox.showerror('Error', 'Username already exists')
         else:
-            cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+            login.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
             logindata.commit()
             usernameentry.delete(0,END)
             passwordentry.delete(0,END)
