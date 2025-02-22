@@ -111,8 +111,12 @@ signupbutton = Button(frame, text='Signup', fg='white', bg="#003366", command=si
 signupbutton.place(x=85, y=150)
 
 #toclose the login window
-closewindowbutton= Button(login,)
+def closewin():
+    login.destroy()
+closewindowbutton= Button(login,text='Close window', command=closewin)
+closewindowbutton.place(relx=1,rely=0,anchor='ne')
 
+#to exit full screen
 def exit_fullscreen(event):
     login.attributes("-fullscreen",False)
 
