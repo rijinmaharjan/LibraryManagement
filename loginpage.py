@@ -4,9 +4,10 @@ import sqlite3
 import runpy
 from PIL import Image, ImageTk
 
+
 #for signin and signup initializing database
 logindata = sqlite3.connect('users.db')
-logindb=logindata.cursor()
+logindb = logindata.cursor()
 logindb.execute(
     '''CREATE TABLE IF NOT EXISTS users(
     username text PRIMARYKEY,
@@ -15,6 +16,8 @@ logindb.execute(
     '''
 )
 logindata.commit()
+
+
 
 login=Tk()
 
@@ -35,10 +38,10 @@ banner_frame.pack()
 banner_label = Label(banner_frame, text="Library Management System Login Portal", fg="white", bg="#003366", font=("Arial", 16, "bold"))
 banner_label.pack()
 
+
 #for login frame 
 screen_width = login.winfo_screenwidth()
 screen_height = login.winfo_screenheight()
-
 
 frame_width = 300 
 frame_height = 200
@@ -47,6 +50,7 @@ y_center = (screen_height-frame_height) // 2
 
 frame = Frame(login, width=frame_width, height=frame_height,bg="#57a1f8")
 frame.place(relx=0.5, rely=0.5, anchor='center', width=frame_width, height=frame_height)
+
 
 
 #to show and hide password
