@@ -5,16 +5,15 @@ import runpy
 from PIL import Image, ImageTk 
 
 # Database for books
-booklist = sqlite3.connect('allbooks.db')
-books = booklist.cursor()
-books.execute(
+booklist_db = sqlite3.connect('allbooks.db')
+booklist_cursor = booklist_db.cursor()
+booklist_cursor.execute(
     '''CREATE TABLE IF NOT EXISTS Books(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name text,
-    Author text,
-    Status text
-    )
-    '''
+    Name TEXT,
+    Author TEXT,
+    Status TEXT
+    )'''
 )
 
 dashboard = Tk()
@@ -32,22 +31,29 @@ logout_icon = PhotoImage(file="logouticon.png")
 menuframe = Frame(dashboard, height=50, bg='gray')
 menuframe.pack(fill='x')
 
-requests = runpy.run_path('request.py')
+# Load modules
+request_module = runpy.run_path('request.py')
+lend_module = runpy.run_path('lend.py')
 
 # Functions for menu buttons
 def newbook():
     runpy.run_path('newbook.py')
 
+def lendbook():
+    lend_module['add_to_lent'](requests_list, borrowed_list, booklist_cursor)
+    booklist_db.commit()  # Commit Books status change
+    show_books()  # Refresh book_list
+
 def request_book():
-    requests['add_request'](book_list, requests_list)
+    request_module['add_request'](book_list, requests_list)
 
 def deletebook():
     selected = book_list.curselection()
     if selected:
         selected_book = book_list.get(selected[0])
         book_id = selected_book.split('.')[0]
-        books.execute("DELETE FROM Books WHERE id = ?", (book_id,))
-        booklist.commit()
+        booklist_cursor.execute("DELETE FROM Books WHERE id = ?", (book_id,))
+        booklist_db.commit()
         show_books()
         messagebox.showinfo("Success", "Book deleted successfully!")
     else:
@@ -55,7 +61,8 @@ def deletebook():
 
 def refreshbook():
     show_books()
-    requests['show_requests'](requests_list)
+    request_module['show_requests'](requests_list)
+    lend_module['show_lent'](borrowed_list)
 
 def logout():
     dashboard.destroy()
@@ -68,7 +75,7 @@ newbook_button.grid(row=0, column=0, padx=5, pady=5)
 returnbook_button = Button(menuframe, text="Request Book", image=returnbook_icon, compound=LEFT, command=request_book)
 returnbook_button.grid(row=0, column=1, padx=5, pady=5)
 
-lendbook_button = Button(menuframe, text="Lend Book", image=lendbook_icon, compound=LEFT, command=newbook)
+lendbook_button = Button(menuframe, text="Lend Book", image=lendbook_icon, compound=LEFT, command=lendbook)
 lendbook_button.grid(row=0, column=2, padx=5, pady=5)
 
 deletebook_button = Button(menuframe, text="Delete Selected Book", image=deletebook_icon, compound=LEFT, command=deletebook)
@@ -115,31 +122,36 @@ borrowers_frame.pack(side=BOTTOM, fill=BOTH, expand=True, padx=5, pady=5)
 borrowers_label = Label(borrowers_frame, text="Your Borrowed Books", font=("Arial", 16, "bold"), bg="#0a0102")
 borrowers_label.pack(pady=5)
 
-borrowers_list_label = Listbox(borrowers_frame, height=10, width=50, bg="white", fg='#0a0102')
-borrowers_list_label.pack(fill=BOTH, expand=True, padx=5, pady=5)
+borrowed_list = Listbox(borrowers_frame, height=10, width=50, bg="white", fg='#0a0102')
+borrowed_list.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
 # Show books
 def show_books():
-    books.execute('SELECT * FROM Books')
-    result = books.fetchall()
+    booklist_cursor.execute('SELECT * FROM Books')
+    result = booklist_cursor.fetchall()
     book_list.delete(0, 'end')
-    for i in result:
-        book_list.insert('end', f"{i[0]}. {i[1]} by {i[2]} - {i[3]}")
+    for book in result:
+        book_list.insert('end', f"{book[0]}. {book[1]} by {book[2]} - {book[3]}")
 
 def closewin():
     dashboard.destroy()
-    booklist.commit()
-    booklist.close()
-    requests['close_db']()
+    booklist_db.commit()
+    booklist_db.close()
+    request_module['close_db']()
+    lend_module['close_db']()
 
-closewindowbutton = Button(dashboard, text='Close window', command=closewin)
-closewindowbutton.place(relx=1, rely=0, anchor='ne')
+closewindow_button = Button(dashboard, text='Close window', command=closewin)
+closewindow_button.place(relx=1, rely=0, anchor='ne')
 
 # Load data on startup
 show_books()
-requests['show_requests'](requests_list)
+request_module['show_requests'](requests_list)
+lend_module['show_lent'](borrowed_list)
 
 dashboard.mainloop()
-booklist.commit()
-booklist.close()
-requests['close_db']()
+
+# Cleanup after main loop exits
+booklist_db.commit()
+booklist_db.close()
+request_module['close_db']()
+lend_module['close_db']()
