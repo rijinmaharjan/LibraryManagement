@@ -1,6 +1,8 @@
 import sqlite3
+from tkinter import messagebox
 
-# Database setup
+
+
 db = sqlite3.connect('requests.db')
 cursor = db.cursor()
 cursor.execute(
@@ -16,7 +18,7 @@ cursor.execute(
 db.commit()
 
 def add_request(book_list, requests_list):
-    from tkinter import messagebox
+    
     selected = book_list.curselection()
     if selected:
         book = book_list.get(selected[0])
@@ -36,6 +38,15 @@ def add_request(book_list, requests_list):
             messagebox.showwarning("Warning", "Already requested!")
     else:
         messagebox.showerror("Error", "Select a book first!")
+
+def delete_request(book_id, name, author, requests_list):
+    cursor.execute("DELETE FROM Requests WHERE Book_id = ? AND Name = ? AND Author = ?",
+                   (book_id, name, author))
+    db.commit()
+    for i, request in enumerate(requests_list.get(0, 'end')):
+        if request.startswith(f"{book_id}. {name} by {author}"):
+            requests_list.delete(i)
+            break
 
 def show_requests(requests_list):
     cursor.execute("SELECT Book_id, Name, Author, Status FROM Requests")
