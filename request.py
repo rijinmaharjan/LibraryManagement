@@ -17,8 +17,12 @@ cursor.execute(
 )
 db.commit()
 
+
 def add_request(book_list, requests_list):
+<<<<<<< HEAD
     
+=======
+>>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
     selected = book_list.curselection()
     if selected:
         book = book_list.get(selected[0])
@@ -39,6 +43,7 @@ def add_request(book_list, requests_list):
     else:
         messagebox.showerror("Error", "Select a book first!")
 
+<<<<<<< HEAD
 def delete_request(book_id, name, author, requests_list):
     cursor.execute("DELETE FROM Requests WHERE Book_id = ? AND Name = ? AND Author = ?",
                    (book_id, name, author))
@@ -47,6 +52,9 @@ def delete_request(book_id, name, author, requests_list):
         if request.startswith(f"{book_id}. {name} by {author}"):
             requests_list.delete(i)
             break
+=======
+
+>>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 
 def show_requests(requests_list):
     cursor.execute("SELECT Book_id, Name, Author, Status FROM Requests")
@@ -54,6 +62,8 @@ def show_requests(requests_list):
     requests_list.delete(0, 'end')
     for book_id, name, author, status in requests:
         requests_list.insert('end', f"{book_id}. {name} by {author} - {status}")
+
+
 
 def close_db():
     db.commit()

@@ -5,7 +5,7 @@ import runpy
 from PIL import Image, ImageTk
 
 
-#for signin and signup initializing database
+
 logindata = sqlite3.connect('users.db')
 logindb = logindata.cursor()
 logindb.execute(
@@ -25,21 +25,24 @@ login.title('Library Management System Login')
 login.attributes("-fullscreen",True)
 login.minsize(400,400)
 
-#for backgtound image
+
+
 backgroundimage=Image.open('loginpage.jpg')
-backgroundimage=backgroundimage.resize((login.winfo_screenwidth(), login.winfo_screenheight()))    #to resize with exact dimensions of my screen
+backgroundimage=backgroundimage.resize((login.winfo_screenwidth(), login.winfo_screenheight()))   
 backgroumdimage_insert = ImageTk.PhotoImage(backgroundimage) 
 backgroundimage_label = Label(login, image=backgroumdimage_insert)
 backgroundimage_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-#title for the page
+
+
 banner_frame = Frame(login, bg="#003366", height=50)
 banner_frame.pack() 
 banner_label = Label(banner_frame, text="Library Management System Login Portal", fg="white", bg="#003366", font=("Arial", 16, "bold"))
 banner_label.pack()
 
 
-#for login frame 
+
+
 screen_width = login.winfo_screenwidth()
 screen_height = login.winfo_screenheight()
 
@@ -53,7 +56,7 @@ frame.place(relx=0.5, rely=0.5, anchor='center', width=frame_width, height=frame
 
 
 
-#to show and hide password
+
 def showpassword():
     a=checkbutton.get()
     if a==1:
@@ -61,7 +64,8 @@ def showpassword():
     else:
         passwordentry.config(show="*")
 
-#to check username and passsword
+
+
 def signin():
     username = usernameentry.get()
     password = passwordentry.get()
@@ -76,7 +80,7 @@ def signin():
         passwordentry.delete(0,END)
         messagebox.showerror('Warning', 'Incorrect password or username')
 
-#to make new account
+
 def signup():
     username = usernameentry.get()
     password = passwordentry.get()
@@ -114,17 +118,20 @@ loginbutton.place(x=85, y=120)
 signupbutton = Button(frame, text='Signup', fg='white', bg="#003366", command=signup)
 signupbutton.place(x=85, y=150)
 
-#toclose the login window
+
+
 def closewin():
     login.destroy()
 closewindowbutton= Button(login,text='Close window', command=closewin)
 closewindowbutton.place(relx=1,rely=0,anchor='ne')
 
-#to exit full screen
+
+
 def exit_fullscreen(event):
     login.attributes("-fullscreen",False)
 
-#adding return bind so that enter thichda chalos
+
+
 
 
 login.bind('<Escape>',exit_fullscreen)

@@ -17,6 +17,7 @@ cursor.execute(
 )
 db.commit()
 
+
 def add_to_lent(requests_list, borrowed_list, booklist_cursor):
     
     selected = requests_list.curselection()
@@ -49,6 +50,7 @@ def add_to_lent(requests_list, borrowed_list, booklist_cursor):
     booklist_cursor.execute("UPDATE Books SET Status = 'Unavailable' WHERE id = ?", (book_id,))
     messagebox.showinfo("Success", f"Book '{name.strip()}' lent out!")
 
+<<<<<<< HEAD
 def delete_lent(book_id, name, author, borrowed_list):
     cursor.execute("DELETE FROM Lent WHERE Book_id = ? AND Name = ? AND Author = ?",
                    (book_id, name, author))
@@ -57,6 +59,9 @@ def delete_lent(book_id, name, author, borrowed_list):
         if lent.startswith(f"{book_id}. {name} by {author}"):
             borrowed_list.delete(i)
             break
+=======
+
+>>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 
 def show_lent(borrowed_list):
     cursor.execute("SELECT Book_id, Name, Author, Status FROM Lent")
@@ -64,6 +69,8 @@ def show_lent(borrowed_list):
     borrowed_list.delete(0, 'end')
     for book_id, name, author, status in lent_books:
         borrowed_list.insert('end', f"{book_id}. {name} by {author} - {status}")
+
+
 
 def close_db():
     db.commit()
