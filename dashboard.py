@@ -145,7 +145,7 @@ main_frame.pack(fill=BOTH, expand=True)
 book_frame = Frame(main_frame, bg="#0a0102", width=300)
 book_frame.pack(side=LEFT, fill=BOTH, expand=True, padx=5, pady=5)
 
-book_label = Label(book_frame, text="All Books", font=("Arial", 16, "bold"), bg="#0a0102")
+book_label = Label(book_frame, text="All Books", font=("Arial", 16, "bold"), bg="#0a0102",fg='white')
 book_label.pack(pady=5)
 
 book_list = Listbox(book_frame, height=20, width=50, bg="white", fg='#0a0102')
@@ -163,7 +163,7 @@ right_frame.pack(side=RIGHT, fill=BOTH, expand=True, padx=5, pady=5)
 requests_frame = Frame(right_frame, bg="#0a0102")
 requests_frame.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
 
-requests_label = Label(requests_frame, text="Requests", font=("Arial", 16, "bold"), bg="#0a0102")
+requests_label = Label(requests_frame, text="Requests", font=("Arial", 16, "bold"), bg="#0a0102",fg='white')
 requests_label.pack(pady=5)
 
 requests_list = Listbox(requests_frame, height=10, width=50, bg="white", fg='#0a0102')
@@ -174,7 +174,7 @@ requests_list.pack(fill=BOTH, expand=True, padx=5, pady=5)
 borrowers_frame = Frame(right_frame, bg="#0a0102")
 borrowers_frame.pack(side=BOTTOM, fill=BOTH, expand=True, padx=5, pady=5)
 
-borrowers_label = Label(borrowers_frame, text="Your Borrowed Books", font=("Arial", 16, "bold"), bg="#0a0102")
+borrowers_label = Label(borrowers_frame, text="Your Borrowed Books", font=("Arial", 16, "bold"), bg="#0a0102",fg='white')
 borrowers_label.pack(pady=5)
 
 borrowed_list = Listbox(borrowers_frame, height=10, width=50, bg="white", fg='#0a0102')
@@ -209,9 +209,3 @@ lend_module['show_lent'](borrowed_list)
 dashboard.mainloop()
 
 
-
-booklist_db.commit()
-booklist_db.close()
-request_module['close_db']()
-lend_module['close_db']()
-return_module['close_db']()
