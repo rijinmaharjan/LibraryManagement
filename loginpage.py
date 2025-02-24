@@ -82,20 +82,7 @@ def signin():
 
 
 def signup():
-    username = usernameentry.get()
-    password = passwordentry.get()
-    if username and password:
-        logindb.execute("SELECT * FROM users WHERE username=?", (username,))
-        if logindb.fetchone():
-            messagebox.showerror('Error', 'Username already exists')
-        else:
-            logindb.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-            logindata.commit()
-            usernameentry.delete(0,END)
-            passwordentry.delete(0,END)
-            messagebox.showinfo('Success', 'Account created successfully!')
-    else:
-        messagebox.showerror('Error', 'Please enter both username and password')
+    runpy.run_path('signup.py')
 
 
 username = Label(frame, text='Username:',bg="#57a1f8").place(x=40, y=50)
