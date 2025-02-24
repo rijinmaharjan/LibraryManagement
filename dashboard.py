@@ -5,10 +5,6 @@ import runpy
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 booklist_db = sqlite3.connect('allbooks.db')
 booklist_cursor = booklist_db.cursor()
 booklist_cursor.execute(
@@ -53,31 +49,18 @@ def newbook():
 def lendbook():
     lend_module['add_to_lent'](requests_list, borrowed_list, booklist_cursor)
     booklist_db.commit()  
-<<<<<<< HEAD
     show_books()  
 
-=======
-    show_books() 
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 
 
 def request_book():
     request_module['add_request'](book_list, requests_list)
 
-<<<<<<< HEAD
 def returnbook():
     return_module['return_book'](borrowed_list, requests_list, booklist_cursor)
     booklist_db.commit()  
     show_books() 
 
-=======
-
-
-def returnbook():
-    return_module['return_book'](borrowed_list, requests_list, booklist_cursor)
-    booklist_db.commit() 
-    show_books()  
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 
 
 def deletebook():
@@ -143,11 +126,7 @@ lendbook_button.grid(row=0, column=2, padx=5, pady=5)
 return_button = Button(menuframe, text="Return Book", image=returnbook_icon, compound=LEFT, command=returnbook)
 return_button.grid(row=0, column=3, padx=5, pady=5)
 
-<<<<<<< HEAD
 deletebook_button = Button(menuframe, text="Delete", image=deletebook_icon, compound=LEFT, command=deletebook)
-=======
-deletebook_button = Button(menuframe, text="Delete Selected Book", image=deletebook_icon, compound=LEFT, command=deletebook)
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 deletebook_button.grid(row=0, column=4, padx=5, pady=5)
 
 refreshbook_button = Button(menuframe, text="Refresh Book", image=refreshbook_icon, compound=LEFT, command=refreshbook)
@@ -157,20 +136,12 @@ logout_button = Button(menuframe, text="Logout", image=logout_icon, compound=LEF
 logout_button.grid(row=0, column=6, padx=5, pady=5)
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 
 main_frame = Frame(dashboard)
 main_frame.pack(fill=BOTH, expand=True)
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 book_frame = Frame(main_frame, bg="#0a0102", width=300)
 book_frame.pack(side=LEFT, fill=BOTH, expand=True, padx=5, pady=5)
 
@@ -181,20 +152,14 @@ book_list = Listbox(book_frame, height=20, width=50, bg="white", fg='#0a0102')
 book_list.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 right_frame = Frame(main_frame, bg="#e6f3ff")
 right_frame.pack(side=RIGHT, fill=BOTH, expand=True, padx=5, pady=5)
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 requests_frame = Frame(right_frame, bg="#0a0102")
 requests_frame.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
 
@@ -204,11 +169,8 @@ requests_label.pack(pady=5)
 requests_list = Listbox(requests_frame, height=10, width=50, bg="white", fg='#0a0102')
 requests_list.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 borrowers_frame = Frame(right_frame, bg="#0a0102")
 borrowers_frame.pack(side=BOTTOM, fill=BOTH, expand=True, padx=5, pady=5)
 
@@ -218,11 +180,8 @@ borrowers_label.pack(pady=5)
 borrowed_list = Listbox(borrowers_frame, height=10, width=50, bg="white", fg='#0a0102')
 borrowed_list.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 72f559ad23588259b789d57daaf7f2b3911347ba
 def show_books():
     booklist_cursor.execute('SELECT * FROM Books')
     result = booklist_cursor.fetchall()
