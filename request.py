@@ -1,6 +1,8 @@
 import sqlite3
+from tkinter import messagebox
 
-# Database setup
+
+
 db = sqlite3.connect('requests.db')
 cursor = db.cursor()
 cursor.execute(
@@ -15,8 +17,8 @@ cursor.execute(
 )
 db.commit()
 
+
 def add_request(book_list, requests_list):
-    from tkinter import messagebox
     selected = book_list.curselection()
     if selected:
         book = book_list.get(selected[0])
@@ -37,12 +39,16 @@ def add_request(book_list, requests_list):
     else:
         messagebox.showerror("Error", "Select a book first!")
 
+
+
 def show_requests(requests_list):
     cursor.execute("SELECT Book_id, Name, Author, Status FROM Requests")
     requests = cursor.fetchall()
     requests_list.delete(0, 'end')
     for book_id, name, author, status in requests:
         requests_list.insert('end', f"{book_id}. {name} by {author} - {status}")
+
+
 
 def close_db():
     db.commit()
