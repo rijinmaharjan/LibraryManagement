@@ -21,16 +21,19 @@ def add_book():
 new_book = Tk()
 new_book.title("Add New Book")
 new_book.geometry("300x200")
+new_book.configure(bg='teal')
+banner_label = Label(new_book, text="Add a New Book", fg="white", bg="#003366", font=("Arial", 16, "bold"))
+banner_label.pack()
 
-Label(new_book, text="Title:").pack()
+Label(new_book, text="Title:",bg='teal').pack()
 title_entry = Entry(new_book)
 title_entry.pack()
 
-Label(new_book, text="Author:").pack()
+Label(new_book, text="Author:",bg='teal').pack()
 author_entry = Entry(new_book)
 author_entry.pack()
 
-add_button = Button(new_book, text="Add Book", command=add_book)
+add_button = Button(new_book, text="Add Book",bg='lavender', command=add_book)
 add_button.pack(pady=10)
 
 new_book.mainloop()

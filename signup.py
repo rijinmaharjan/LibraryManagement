@@ -8,6 +8,11 @@ signupwindow=Tk()
 signupwindow.title('Sign UP')
 signupwindow.geometry('300x200')
 signupwindow.resizable(False,False)
+
+signupwindow.configure(bg="teal") 
+banner_label = Label(signupwindow, text="Signup Portal", fg="white", bg="#003366", font=("Arial", 16, "bold"))
+banner_label.pack()
+
 logindata = sqlite3.connect('users.db')
 logindb = logindata.cursor()
 
@@ -30,8 +35,8 @@ def signup():
         messagebox.showerror('Error', 'Please enter both username and password')
 
 
-username = Label(signupwindow, text='Username:',bg="#57a1f8").place(x=40, y=50)
-password = Label(signupwindow, text='Password:',bg="#57a1f8").place(x=40, y=75)
+username = Label(signupwindow, text='Username:',bg="teal").place(x=40, y=50)
+password = Label(signupwindow, text='Password:',bg="teal").place(x=40, y=75)
 
 usernameentry = Entry(signupwindow)
 usernameentry.place(x=120, y=50)
@@ -40,7 +45,7 @@ usernameentry.place(x=120, y=50)
 passwordentry = Entry(signupwindow)
 passwordentry.place(x=120, y=75)
 signupbutton = Button(signupwindow, text='Signup', fg='white', bg="#003366", command=signup)
-signupbutton.place(x=85, y=150)
+signupbutton.place(x=120, y=100)
 
 signupwindow.mainloop()
 logindata.close()
