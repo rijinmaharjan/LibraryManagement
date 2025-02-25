@@ -23,6 +23,7 @@ def signup():
         logindb.execute("SELECT * FROM users WHERE username=?", (username,))
         if logindb.fetchone():
             messagebox.showerror('Error', 'Username already exists')
+            signupwindow.destroy()
         else:
             logindb.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
             logindata.commit()
