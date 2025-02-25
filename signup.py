@@ -33,6 +33,7 @@ def signup():
             signupwindow.destroy()
     else:
         messagebox.showerror('Error', 'Please enter both username and password')
+        signupwindow.destroy()
 
 
 username = Label(signupwindow, text='Username:',bg="teal").place(x=40, y=50)
