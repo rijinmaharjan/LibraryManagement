@@ -20,7 +20,7 @@ def return_book(borrowed_list, requests_list, booklist_cursor):
     
     selected = borrowed_list.curselection()
     if not selected:
-        messagebox.showerror("Error", "Please select a book from the Lent part!")
+        messagebox.showerror("Error", "Please select a books you from the Lent part!")
         return
 
     selected_lent = borrowed_list.get(selected[0])
